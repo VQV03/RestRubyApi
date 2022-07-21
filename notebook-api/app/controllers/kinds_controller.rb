@@ -1,19 +1,19 @@
 class KindsController < ApplicationController
   before_action :set_kind, only: [:show, :update, :destroy]
 
-  # GET /kinds
+  #Get /kinds
   def index
     @kinds = Kind.all
 
     render json: @kinds
   end
 
-  # GET /kinds/1
+  #Get /kinds/1
   def show
     render json: @kind
   end
 
-  # POST /kinds
+  #Post
   def create
     @kind = Kind.new(kind_params)
 
@@ -24,7 +24,7 @@ class KindsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /kinds/1
+  #Patch
   def update
     if @kind.update(kind_params)
       render json: @kind
@@ -33,18 +33,21 @@ class KindsController < ApplicationController
     end
   end
 
-  # DELETE /kinds/1
+  #Delete
   def destroy
     @kind.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_kind
+      if params[:contact_id]
+        @kind = Contact.find(params[:contact_id]).kind
+        return @kind
+      end
+
       @kind = Kind.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def kind_params
       params.require(:kind).permit(:description)
     end
