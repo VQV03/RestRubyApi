@@ -1,4 +1,24 @@
 class KindsController < ApplicationController
+
+  before_action :authenticate_user!
+
+  #BASIC
+  # include ActionController::HttpAuthentication::Basic::ControllerMethods
+  # http_basic_authenticate_with name: "admin", password: "admin@123"
+
+  #DIGEST
+  # include ActionController::HttpAuthentication::Digest::ControllerMethods
+  # USERS = { "dap" => Digest::MD5.hexdigest(["dap",REALM,"secret"].join(":"))}
+  # include ActionController::HttpAuthentication::Digest::ControllerMethods
+  # USERS = { "admin" => Digest::MD5.hexdigest(["admin","Application","admin@123"].join(":"))}
+
+  #TOKEN
+  #TOKEN = ENV['TOKEN']
+
+  #include ActionController::HttpAuthentication::Token::ControllerMethods
+
+  #before_action :authenticate
+
   before_action :set_kind, only: [:show, :update, :destroy]
 
   #Get /kinds
@@ -51,4 +71,29 @@ class KindsController < ApplicationController
     def kind_params
       params.require(:kind).permit(:description)
     end
+
+    # def authenticate
+    #   #DIGEST
+    #   # authenticate_or_request_with_http_digest("Application") do |username|
+    #   #   USERS[username]
+    #   # end
+
+    #   #TOKEN
+    #   # authenticate_or_request_with_http_token do |token, options|
+    #   #   # Compare the tokens in a time-constant manner, to mitigate
+    #   #   # timing attacks.
+    #   #   # https://en.wikipedia.org/wiki/Timing_attack
+    #   #   # https://rubsphp.blogspot.com/2014/03/prevencao-de-timing-attack-no-php.html?m=0
+    #   #   ActiveSupport::SecurityUtils.secure_compare(
+    #   #     ::Digest::SHA256.hexdigest(token),
+    #   #     ::Digest::SHA256.hexdigest(TOKEN)
+    #   #   )
+    #   # end
+
+    #   #JWT
+    #   authenticate_or_request_with_http_token do |token, options|
+    #     hmac_secret = ENV['TOKEN']
+    #     JWT.decode token, hmac_secret, true, { :algorithm => 'HS256' }
+    #   end
+    # end
 end

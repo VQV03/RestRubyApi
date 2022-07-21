@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  #Desvise Token Auth
+  mount_devise_token_auth_for 'User', at: 'auth'
+
+  #Authentication
+  #resources :auths, only: [:create]
+  
   resources :kinds
   resources :contacts do
     #Kind
