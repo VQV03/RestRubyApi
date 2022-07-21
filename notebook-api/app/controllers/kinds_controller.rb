@@ -1,5 +1,6 @@
 class KindsController < ApplicationController
 
+  #Devise Token Auth
   before_action :authenticate_user!
 
   #BASIC
