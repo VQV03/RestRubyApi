@@ -11,8 +11,12 @@ module V1
       #   @contacts = Contact.last(5)
       # end
 
-      @contacts = Contact.all
+      page_number = params[:page].try(:[], :number)
+      per_page = params[:page].try(:[], :size)
+
+      @contacts = Contact.all.page(page_number).per(per_page)
       
+      # paginate json: @contacts #, methods: :birthdate_br #[:hello, :i18n]
       render json: @contacts #, methods: :birthdate_br #[:hello, :i18n]
     end
 
