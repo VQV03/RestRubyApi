@@ -6,6 +6,7 @@
 
 .editorconfig
 .env
+vendor
 
 # Ignore bundler config.
 /.bundle
